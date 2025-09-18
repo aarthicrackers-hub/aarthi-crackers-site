@@ -6,7 +6,7 @@
   "framework": "vite",
   "rewrites": [
     {
-      "source": "/((?!logo\\.png).*)",
+      "source": "/((?!logo\\.png|favicon\\.ico|robots\\.txt|sitemap\\.xml).*)",
       "destination": "/index.html"
     }
   ],
@@ -24,10 +24,5 @@
         }
       ]
     }
-  ],
-  "functions": {
-    "app/api/logo.js": {
-      "runtime": "nodejs18.x"
-    }
-  }
+  ]
 }

@@ -14,13 +14,7 @@ export default defineConfig({
     assetsDir: 'assets',
     rollupOptions: {
       output: {
-        assetFileNames: (assetInfo) => {
-          // Keep logo.png in root directory
-          if (assetInfo.name === 'logo.png') {
-            return 'logo.png'
-          }
-          return 'assets/[name]-[hash][extname]'
-        }
+        assetFileNames: 'assets/[name]-[hash][extname]'
       }
     }
   },

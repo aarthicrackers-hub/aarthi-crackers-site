@@ -1,23 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, Shield, Award, Truck } from 'lucide-react';
-import { getWorkingLogoSource } from '../utils/logoUtils';
 
 export const Footer: React.FC = () => {
   const [logoError, setLogoError] = useState(false);
-  const [logoSource, setLogoSource] = useState('/logo.png');
-
-  // Try to find a working logo source on component mount
-  useEffect(() => {
-    getWorkingLogoSource().then((source) => {
-      if (source) {
-        setLogoSource(source);
-        setLogoError(false);
-      } else {
-        setLogoError(true);
-      }
-    });
-  }, []);
 
   return (
     <footer className="bg-gray-900 text-white">
@@ -28,7 +14,7 @@ export const Footer: React.FC = () => {
             <div className="flex items-center space-x-2">
                   {!logoError ? (
                     <img 
-                      src={logoSource} 
+                      src="/logo.png" 
                       alt="Aarthi Crackers Logo" 
                       className="w-8 h-8 object-contain"
                       onError={() => {
