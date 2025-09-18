@@ -10,4 +10,19 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    assetsDir: 'assets',
+    rollupOptions: {
+      output: {
+        assetFileNames: (assetInfo) => {
+          // Keep logo.png in root directory
+          if (assetInfo.name === 'logo.png') {
+            return 'logo.png'
+          }
+          return 'assets/[name]-[hash][extname]'
+        }
+      }
+    }
+  },
+  publicDir: 'public'
 })

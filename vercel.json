@@ -1,0 +1,33 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
+  "framework": "vite",
+  "rewrites": [
+    {
+      "source": "/((?!logo\\.png).*)",
+      "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/logo.png",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        },
+        {
+          "key": "Content-Type",
+          "value": "image/png"
+        }
+      ]
+    }
+  ],
+  "functions": {
+    "app/api/logo.js": {
+      "runtime": "nodejs18.x"
+    }
+  }
+}

@@ -1,15 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ShoppingCart, Menu, X } from 'lucide-react';
 import { useCartStore } from '../store/cartStore';
 import { Button } from './ui/Button';
+import { getWorkingLogoSource } from '../utils/logoUtils';
 
 export const Navbar: React.FC = () => {
   const { toggleCart, getTotalItems } = useCartStore();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [logoError, setLogoError] = useState(false);
+  const [logoSource, setLogoSource] = useState('/logo.png');
 
   const totalItems = getTotalItems();
+
+  // Try to find a working logo source on component mount
+  useEffect(() => {
+    getWorkingLogoSource().then((source) => {
+      if (source) {
+        setLogoSource(source);
+        setLogoError(false);
+      } else {
+        setLogoError(true);
+      }
+    });
+  }, []);
 
   return (
     <nav className="bg-white shadow-lg sticky top-0 z-40">
@@ -19,10 +33,16 @@ export const Navbar: React.FC = () => {
           <Link to="/" className="flex items-center space-x-2">
             {!logoError ? (
               <img 
-                src="/logo.png" 
+                src={logoSource} 
                 alt="Aarthi Crackers Logo" 
                 className="w-8 h-8 object-contain"
-                onError={() => setLogoError(true)}
+                onError={() => {
+                  console.log('Logo failed to load, using fallback');
+                  setLogoError(true);
+                }}
+                onLoad={() => {
+                  console.log('Logo loaded successfully');
+                }}
               />
             ) : (
               <div className="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center">
