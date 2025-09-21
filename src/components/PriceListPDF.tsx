@@ -6,8 +6,10 @@ export const PriceListPDF: React.FC = () => {
   // Updated for production deployment - Download functionality
   const handleDownloadPDF = async () => {
     try {
+      console.log('Attempting to download PDF...');
       // Try to fetch the PDF file first
       const response = await fetch('/AARTHI-CRACKERS-Pricelist.pdf');
+      console.log('PDF fetch response:', response.status, response.statusText);
       
       if (response.ok) {
         // Create blob from response
@@ -29,6 +31,9 @@ export const PriceListPDF: React.FC = () => {
       } else {
         // Fallback to direct link method
         console.log('Fetch failed, trying direct link method');
+        console.log('Response status:', response.status);
+        console.log('Response headers:', Object.fromEntries(response.headers.entries()));
+        
         const link = document.createElement('a');
         link.href = '/AARTHI-CRACKERS-Pricelist.pdf';
         link.download = 'AARTHI-CRACKERS-Pricelist.pdf';
