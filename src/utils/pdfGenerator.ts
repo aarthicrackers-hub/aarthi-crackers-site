@@ -22,10 +22,18 @@ export const generatePriceListPDF = (products: Product[]) => {
   doc.text('Contact: +91-9488162475, +91-9443396475 | Email: aarthicrackers@gmail.com', 105, 27, { align: 'center' });
   doc.text('Address: 2/552/G2, Sivakasi-Sattur Main Road, Mettamalai, Sivakasi', 105, 32, { align: 'center' });
   
+  // Discount notice
+  doc.setFillColor(34, 197, 94); // Green
+  doc.rect(10, 38, 190, 8, 'F');
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(12);
+  doc.setFont('helvetica', 'bold');
+  doc.text('🎉 SPECIAL DISCOUNT PRICES - LIMITED TIME OFFER! 🎉', 105, 43, { align: 'center' });
+  
   // Reset text color
   doc.setTextColor(0, 0, 0);
   
-  let yPosition = 40;
+  let yPosition = 52;
   
   // Group products by category
   const groupedProducts = products.reduce((acc, product) => {
@@ -61,8 +69,9 @@ export const generatePriceListPDF = (products: Product[]) => {
     
     doc.text('S.No', 15, yPosition);
     doc.text('Product Name', 30, yPosition);
-    doc.text('Rate (₹)', 140, yPosition);
-    doc.text('Per', 160, yPosition);
+    doc.text('New Rate', 130, yPosition);
+    doc.text('Old Rate', 155, yPosition);
+    doc.text('Per', 175, yPosition);
     
     // Draw line under header
     doc.setDrawColor(0, 0, 0);
@@ -98,11 +107,19 @@ export const generatePriceListPDF = (products: Product[]) => {
         doc.text(productName, 30, yPosition);
       }
       
-      // Rate
-      doc.text(product.rate.toString(), 140, yPosition);
+      // New Rate (highlighted in green)
+      doc.setTextColor(0, 128, 0); // Green color
+      doc.setFont('helvetica', 'bold');
+      doc.text(product.rate.toString(), 130, yPosition);
+      
+      // Old Rate (gray and struck through)
+      doc.setTextColor(128, 128, 128); // Gray color
+      doc.setFont('helvetica', 'normal');
+      doc.text(product.oldRate ? product.oldRate.toString() : '-', 155, yPosition);
       
       // Per
-      doc.text(product.ratePer, 160, yPosition);
+      doc.setTextColor(0, 0, 0); // Black color
+      doc.text(product.ratePer, 175, yPosition);
       
       yPosition += 6;
     });

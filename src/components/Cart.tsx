@@ -93,9 +93,16 @@ export const Cart: React.FC = () => {
                             {item.name}
                           </h3>
                           <p className="text-sm text-gray-500">{item.ratePer}</p>
-                          <p className="text-sm font-semibold text-primary-600">
-                            ₹{item.rate}
-                          </p>
+                          <div className="flex flex-col">
+                            <p className="text-sm font-semibold text-primary-600">
+                              ₹{item.rate}
+                            </p>
+                            {item.oldRate && (
+                              <p className="text-xs text-gray-400 line-through">
+                                ₹{item.oldRate}
+                              </p>
+                            )}
+                          </div>
                         </div>
 
                         {/* Quantity Controls */}
@@ -133,6 +140,20 @@ export const Cart: React.FC = () => {
               {/* Footer */}
               {items.length > 0 && (
                 <div className="border-t p-4 space-y-4">
+                  {/* Savings Summary */}
+                  {items.some(item => item.oldRate) && (
+                    <div className="bg-green-50 p-3 rounded-lg">
+                      <div className="flex justify-between items-center text-sm">
+                        <span className="text-green-700">You Save:</span>
+                        <span className="text-green-600 font-semibold">
+                          ₹{items.reduce((total, item) => 
+                            total + (item.oldRate ? (item.oldRate - item.rate) * item.quantity : 0), 0
+                          )}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+
                   {/* Total */}
                   <div className="flex justify-between items-center text-lg font-semibold">
                     <span>Total:</span>

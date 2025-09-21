@@ -66,13 +66,25 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         
         <div className="space-y-2 mb-4">
           <div className="flex justify-between items-center">
-            <span className="text-2xl font-bold text-primary-600">
-              ₹{product.rate}
-            </span>
+            <div className="flex flex-col items-start">
+              <span className="text-2xl font-bold text-primary-600">
+                ₹{product.rate}
+              </span>
+              {product.oldRate && (
+                <span className="text-sm text-gray-400 line-through">
+                  ₹{product.oldRate}
+                </span>
+              )}
+            </div>
             <span className="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded">
               {product.ratePer}
             </span>
           </div>
+          {product.oldRate && (
+            <div className="text-xs text-green-600 font-medium">
+              Save ₹{product.oldRate - product.rate}
+            </div>
+          )}
         </div>
 
         {/* Add to Cart Button */}
