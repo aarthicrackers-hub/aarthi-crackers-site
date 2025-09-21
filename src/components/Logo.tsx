@@ -1,8 +1,13 @@
-import React, { useState } from 'react';
-import logoImage from '../assets/images/logo.png';
+import React, { useState, useEffect } from 'react';
 
 export const Logo: React.FC = () => {
   const [logoError, setLogoError] = useState(false);
+  const [logoSrc, setLogoSrc] = useState('/logo.png');
+
+  useEffect(() => {
+    // Add cache busting parameter
+    setLogoSrc(`/logo.png?t=${Date.now()}`);
+  }, []);
 
   if (logoError) {
     return (
@@ -14,7 +19,7 @@ export const Logo: React.FC = () => {
 
   return (
     <img 
-      src={logoImage} 
+      src={logoSrc}
       alt="Aarthi Crackers Logo" 
       className="w-8 h-8 object-contain"
       onError={() => {
