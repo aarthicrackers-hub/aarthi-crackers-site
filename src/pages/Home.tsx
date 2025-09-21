@@ -24,7 +24,7 @@ export const Home: React.FC = () => {
                 </span>
               </h1>
               <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-                Your trusted partner for premium fireworks and crackers. 
+                Your trustedd partner for premium fireworks and crackers. 
                 Celebrating festivals with safety, joy, and spectacular displays.
               </p>
             </motion.div>
