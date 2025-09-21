@@ -3,12 +3,11 @@ import { Link } from 'react-router-dom';
 import { ShoppingCart, Menu, X } from 'lucide-react';
 import { useCartStore } from '../store/cartStore';
 import { Button } from './ui/Button';
-import logoImage from '../assets/images/logo.png';
+import { Logo } from './Logo';
 
 export const Navbar: React.FC = () => {
   const { toggleCart, getTotalItems } = useCartStore();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [logoError, setLogoError] = useState(false);
 
   const totalItems = getTotalItems();
 
@@ -18,24 +17,7 @@ export const Navbar: React.FC = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            {!logoError ? (
-              <img 
-                src={logoImage} 
-                alt="Aarthi Crackers Logo" 
-                className="w-8 h-8 object-contain"
-                onError={() => {
-                  console.log('Logo failed to load, using fallback');
-                  setLogoError(true);
-                }}
-                onLoad={() => {
-                  console.log('Logo loaded successfully');
-                }}
-              />
-            ) : (
-              <div className="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-lg">A</span>
-              </div>
-            )}
+            <Logo />
             <span className="text-xl font-bold text-gray-900">Aarthi Crackers</span>
           </Link>
 
