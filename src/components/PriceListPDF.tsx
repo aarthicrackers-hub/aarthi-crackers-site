@@ -3,6 +3,7 @@ import { Download } from 'lucide-react';
 import { Button } from './ui/Button';
 
 export const PriceListPDF: React.FC = () => {
+  // Updated for production deployment - Download functionality
   const handleDownloadPDF = async () => {
     try {
       // Try to fetch the PDF file first
