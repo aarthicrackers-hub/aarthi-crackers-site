@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, Shield, Award, Truck } from 'lucide-react';
+import { Logo } from './Logo';
 
 export const Footer: React.FC = () => {
-  const [logoError, setLogoError] = useState(false);
-
   return (
     <footer className="bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -12,24 +11,7 @@ export const Footer: React.FC = () => {
           {/* Company Info */}
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
-                  {!logoError ? (
-                    <img 
-                      src="/logo.png" 
-                      alt="Aarthi Crackers Logo" 
-                      className="w-8 h-8 object-contain"
-                      onError={() => {
-                        console.log('Footer logo failed to load, using fallback');
-                        setLogoError(true);
-                      }}
-                      onLoad={() => {
-                        console.log('Footer logo loaded successfully');
-                      }}
-                    />
-                  ) : (
-                <div className="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center">
-                  <span className="text-white font-bold text-lg">A</span>
-                </div>
-              )}
+              <Logo />
               <span className="text-xl font-bold">Aarthi Crackers</span>
             </div>
             <p className="text-gray-300 text-sm">

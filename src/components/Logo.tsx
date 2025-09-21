@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import logoImage from '../assets/images/logo.png';
 
 export const Logo: React.FC = () => {
   const [logoError, setLogoError] = useState(false);
@@ -13,7 +14,7 @@ export const Logo: React.FC = () => {
 
   return (
     <img 
-      src="/logo.png"
+      src={logoImage}
       alt="Aarthi Crackers Logo" 
       className="w-8 h-8 object-contain"
       onError={() => {
