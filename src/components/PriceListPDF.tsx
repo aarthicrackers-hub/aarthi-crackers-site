@@ -16,20 +16,25 @@ export const PriceListPDF: React.FC = () => {
         const blob = await response.blob();
         const url = window.URL.createObjectURL(blob);
         
-        // Create download link
+        // Create download link with direct download attributes
         const link = document.createElement('a');
         link.href = url;
         link.download = 'AARTHI-CRACKERS-Pricelist.pdf';
+        link.style.display = 'none'; // Hide the link
         
-        // Trigger download
+        // Add to DOM, click, and remove immediately
         document.body.appendChild(link);
         link.click();
-        document.body.removeChild(link);
         
-        // Clean up the URL object
-        window.URL.revokeObjectURL(url);
+        // Clean up immediately
+        setTimeout(() => {
+          document.body.removeChild(link);
+          window.URL.revokeObjectURL(url);
+        }, 100);
+        
+        console.log('PDF download initiated successfully');
       } else {
-        // Fallback to direct link method
+        // Fallback to direct link method with forced download
         console.log('Fetch failed, trying direct link method');
         console.log('Response status:', response.status);
         console.log('Response headers:', Object.fromEntries(response.headers.entries()));
@@ -37,16 +42,29 @@ export const PriceListPDF: React.FC = () => {
         const link = document.createElement('a');
         link.href = '/AARTHI-CRACKERS-Pricelist.pdf';
         link.download = 'AARTHI-CRACKERS-Pricelist.pdf';
-        link.target = '_blank';
+        link.style.display = 'none';
         
         document.body.appendChild(link);
         link.click();
-        document.body.removeChild(link);
+        
+        setTimeout(() => {
+          document.body.removeChild(link);
+        }, 100);
       }
     } catch (error) {
       console.error('Download failed:', error);
-      // Final fallback - open in new tab
-      window.open('/AARTHI-CRACKERS-Pricelist.pdf', '_blank');
+      // Final fallback - try direct download
+      const link = document.createElement('a');
+      link.href = '/AARTHI-CRACKERS-Pricelist.pdf';
+      link.download = 'AARTHI-CRACKERS-Pricelist.pdf';
+      link.style.display = 'none';
+      
+      document.body.appendChild(link);
+      link.click();
+      
+      setTimeout(() => {
+        document.body.removeChild(link);
+      }, 100);
     }
   };
 

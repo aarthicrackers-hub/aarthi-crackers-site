@@ -33,6 +33,10 @@
         {
           "key": "Content-Disposition",
           "value": "attachment; filename=\"AARTHI-CRACKERS-Pricelist.pdf\""
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
         }
       ]
     }
