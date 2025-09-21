@@ -36,6 +36,12 @@ export const Shop: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Debug indicator - remove in production */}
+      {process.env.NODE_ENV === 'development' && (
+        <div className="fixed top-20 left-4 bg-red-500 text-white p-2 text-xs z-50">
+          showFilters: {showFilters.toString()}
+        </div>
+      )}
       {/* Header */}
       <div className="bg-white shadow-sm sticky top-16 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-6">
@@ -66,12 +72,15 @@ export const Shop: React.FC = () => {
 
             {/* Filter Toggle (Mobile) */}
             <Button
-              variant="outline"
-              onClick={() => setShowFilters(!showFilters)}
-              className="lg:hidden text-sm"
+              variant={showFilters ? "default" : "outline"}
+              onClick={() => {
+                console.log('Filter button clicked, current state:', showFilters);
+                setShowFilters(!showFilters);
+              }}
+              className="lg:hidden text-sm min-w-[100px]"
             >
               <Filter className="w-4 h-4 mr-2" />
-              Filters
+              {showFilters ? 'Close' : 'Filters'}
             </Button>
 
             {/* Clear Filters */}
@@ -108,55 +117,56 @@ export const Shop: React.FC = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex gap-8">
-          {/* Mobile Filter Sidebar */}
-          {showFilters && (
-            <>
-              {/* Prevent body scroll */}
-              <style dangerouslySetInnerHTML={{
-                __html: `
-                  body { overflow: hidden; }
-                `
-              }} />
-              <div className="lg:hidden fixed inset-0 z-50 bg-black/50" onClick={() => setShowFilters(false)}>
-                <div className="fixed right-0 top-0 h-full w-80 max-w-[85vw] bg-white shadow-xl overflow-y-auto" onClick={(e) => e.stopPropagation()}>
-                  <div className="p-4 border-b sticky top-0 bg-white">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-lg font-semibold">Filters</h3>
-                      <button
-                        onClick={() => setShowFilters(false)}
-                        className="p-2 hover:bg-gray-100 rounded-md"
-                      >
-                        <X className="w-5 h-5" />
-                      </button>
-                    </div>
-                  </div>
-                  <div className="p-4">
-                    <h4 className="font-medium mb-3">Categories</h4>
-                    <div className="space-y-2">
-                      {categories.map((category) => (
-                        <button
-                          key={category}
-                          onClick={() => {
-                            setSelectedCategory(category);
-                            setShowFilters(false);
-                          }}
-                          className={`w-full text-left px-3 py-2 rounded-md text-sm transition-colors ${
-                            selectedCategory === category
-                              ? 'bg-primary-100 text-primary-700'
-                              : 'hover:bg-gray-100'
-                          }`}
-                        >
-                          {category}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
+      {/* Mobile Filter Sidebar - Outside main content */}
+      {showFilters && (
+        <>
+          {/* Prevent body scroll */}
+          <style dangerouslySetInnerHTML={{
+            __html: `
+              body { overflow: hidden; }
+            `
+          }} />
+          <div className="lg:hidden fixed inset-0 z-50 bg-black/50" onClick={() => setShowFilters(false)}>
+            <div className="fixed right-0 top-0 h-full w-80 max-w-[85vw] bg-white shadow-xl overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+              <div className="p-4 border-b sticky top-0 bg-white">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-semibold">Filters</h3>
+                  <button
+                    onClick={() => setShowFilters(false)}
+                    className="p-2 hover:bg-gray-100 rounded-md"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
                 </div>
               </div>
-            </>
-          )}
+              <div className="p-4">
+                <h4 className="font-medium mb-3">Categories</h4>
+                <div className="space-y-2">
+                  {categories.map((category) => (
+                    <button
+                      key={category}
+                      onClick={() => {
+                        setSelectedCategory(category);
+                        setShowFilters(false);
+                      }}
+                      className={`w-full text-left px-3 py-2 rounded-md text-sm transition-colors ${
+                        selectedCategory === category
+                          ? 'bg-primary-100 text-primary-700'
+                          : 'hover:bg-gray-100'
+                      }`}
+                    >
+                      {category}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="flex gap-8">
 
           {/* Desktop Filter Sidebar */}
           <div className="hidden lg:block w-64 flex-shrink-0">
