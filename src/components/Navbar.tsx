@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ShoppingCart, Menu, X } from 'lucide-react';
 import { useCartStore } from '../store/cartStore';
 import { Button } from './ui/Button';
+import logoImage from '../assets/images/logo.png';
 
 export const Navbar: React.FC = () => {
   const { toggleCart, getTotalItems } = useCartStore();
@@ -19,7 +20,7 @@ export const Navbar: React.FC = () => {
           <Link to="/" className="flex items-center space-x-2">
             {!logoError ? (
               <img 
-                src="/logo.png" 
+                src={logoImage} 
                 alt="Aarthi Crackers Logo" 
                 className="w-8 h-8 object-contain"
                 onError={() => {
