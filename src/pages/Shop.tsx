@@ -72,7 +72,7 @@ export const Shop: React.FC = () => {
 
             {/* Filter Toggle (Mobile) */}
             <Button
-              variant={showFilters ? "default" : "outline"}
+              variant={showFilters ? "primary" : "outline"}
               onClick={() => {
                 console.log('Filter button clicked, current state:', showFilters);
                 setShowFilters(!showFilters);
